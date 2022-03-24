@@ -20,8 +20,14 @@ class Student:
         else:
             return 'Ошибка'
 
+    def rate_l2(self, lecturer, course, lecture):
+        if course in lecturer.lectures:
+            lecturer.lectures[course] += [lecture]
+        else:
+            lecturer.lectures[course] = [lecture]
+
     def __str__(self):
-        return f'Имя: {self.name}\nФамилия: {self.surname}'
+        return f'Имя: {self.name}\nФамилия: {self.surname}\nЗавершенные курсы:Введение в программирование'
 
 
 from statistics import mean
@@ -71,32 +77,38 @@ class Reviewer(Mentor):
         return f'Имя: {self.name}\nФамилия: {self.surname}'
 
 
-pythonStr = 'Python'
-javascriptStr = 'Javascript'
+python_Str = 'Python'
+javascript_Str = 'Javascript'
 
 best_student = Student('Ruoy', 'Eman', 'your_gender')
-best_student.courses_in_progress += [pythonStr, javascriptStr]
+best_student.courses_in_progress += [python_Str, javascript_Str]
 worst_student = Student('Artem', 'Petrov', 'male')
-worst_student.courses_in_progress += [pythonStr, javascriptStr]
+worst_student.courses_in_progress += [python_Str, javascript_Str]
 
 cool_lecturer = Lecturer('Some', 'Buddy')
-cool_lecturer.courses_attached += [pythonStr, javascriptStr]
+cool_lecturer.courses_attached += [python_Str, javascript_Str]
 bad_lecturer = Lecturer('Some', 'Buddy')
-bad_lecturer.courses_attached += [pythonStr, javascriptStr]
+bad_lecturer.courses_attached += [python_Str, javascript_Str]
 
-best_student.rate_l(cool_lecturer, pythonStr, 10)
-best_student.rate_l(cool_lecturer, javascriptStr, 9)
+best_student.rate_l(cool_lecturer, python_Str, 10)
+best_student.rate_l(cool_lecturer, javascript_Str, 9)
 
-best_student.rate_l(bad_lecturer, pythonStr, 8)
-best_student.rate_l(bad_lecturer, javascriptStr, 4)
+best_student.rate_l(bad_lecturer, python_Str, 8)
+best_student.rate_l(bad_lecturer, javascript_Str, 4)
+
+best_student.rate_l2(cool_lecturer, python_Str, 10)
+best_student.rate_l2(cool_lecturer, javascript_Str, 9)
+
+best_student.rate_l2(bad_lecturer, python_Str, 8)
+best_student.rate_l2(bad_lecturer, javascript_Str, 4)
 
 cool_reviewer = Reviewer('Some', 'Buddy')
-cool_reviewer.courses_attached += [pythonStr, javascriptStr]
-cool_reviewer.rate_hw(best_student, pythonStr, 10)
-cool_reviewer.rate_hw(best_student, javascriptStr, 10)
+cool_reviewer.courses_attached += [python_Str, javascript_Str]
+cool_reviewer.rate_hw(best_student, python_Str, 10)
+cool_reviewer.rate_hw(best_student, javascript_Str, 10)
 
-cool_reviewer.rate_hw(worst_student, pythonStr, 5)
-cool_reviewer.rate_hw(worst_student, javascriptStr, 6)
+cool_reviewer.rate_hw(worst_student, python_Str, 5)
+cool_reviewer.rate_hw(worst_student, javascript_Str, 6)
 
 
 def calculate_grades(student_list, course):
@@ -107,20 +119,20 @@ def calculate_grades(student_list, course):
 
 
 students = [best_student, worst_student]
-print(calculate_grades(students, pythonStr))
-print(calculate_grades(students, javascriptStr))
+print(calculate_grades(students, python_Str))
+print(calculate_grades(students, javascript_Str))
 
 
 def calculate_lectures(lecturer_list, course):
     lectures = []
-    for lecturer in lecturer_list:
-        lectures += lecturer.lectures[course]
+    for lecturer_1 in lecturer_list:
+        lectures += lecturer_1.lectures[course]
     return mean(lectures)
 
 
 lecturers = [cool_lecturer, bad_lecturer]
-print(calculate_lectures(lecturers, pythonStr))
-print(calculate_lectures(lecturers, javascriptStr))
+print(calculate_lectures(lecturers, python_Str))
+print(calculate_lectures(lecturers, javascript_Str))
 
 
 # print(cool_lecturer.grades)
